@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"yslinear/go-covid19/pkg/dataset"
+	"yslinear/go-covid19/pkg/db"
 	"yslinear/go-covid19/pkg/setting"
 	"yslinear/go-covid19/routers"
 
@@ -13,6 +14,7 @@ import (
 
 func init() {
 	setting.Setup()
+	db.Setup()
 	dataset.Setup()
 }
 

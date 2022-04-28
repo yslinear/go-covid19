@@ -22,6 +22,12 @@ type Server struct {
 
 var ServerSetting = &Server{}
 
+type Database struct {
+	SqlitePath string
+}
+
+var DatabaseSetting = &Database{}
+
 var cfg *ini.File
 
 // Setup initialize the configuration instance
