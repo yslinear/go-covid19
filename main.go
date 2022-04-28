@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"yslinear/go-covid19/pkg/dataset"
 	"yslinear/go-covid19/pkg/setting"
 	"yslinear/go-covid19/routers"
 
@@ -12,6 +13,7 @@ import (
 
 func init() {
 	setting.Setup()
+	dataset.Setup()
 }
 
 func main() {
