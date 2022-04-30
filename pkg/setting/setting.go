@@ -40,6 +40,7 @@ func Setup() {
 
 	mapTo("app", AppSetting)
 	mapTo("server", ServerSetting)
+	mapTo("database", DatabaseSetting)
 
 	ServerSetting.ReadTimeout = ServerSetting.ReadTimeout * time.Second
 	ServerSetting.WriteTimeout = ServerSetting.WriteTimeout * time.Second

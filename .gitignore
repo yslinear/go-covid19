@@ -16,3 +16,11 @@
 
 conf/app.ini
 upload/db.sqlite
+upload/datasets/
+
+# macOS
+.DS_Store
+
+# Visual Studio Code
+.vscode/
+__debug_bin
