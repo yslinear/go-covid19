@@ -27,3 +27,16 @@ func AddHospital(data map[string]interface{}) error {
 
 	return nil
 }
+
+func ExistHospitalByCode(code int) (bool, error) {
+	var hospital Hospital
+
+	if err := db.Select("id").Where("code = ?", code).First(&hospital).Error; err != nil {
+		return false, err
+	}
+	if hospital.ID > 0 {
+		return true, nil
+	}
+
+	return false, nil
+}

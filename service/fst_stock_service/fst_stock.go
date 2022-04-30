@@ -1,6 +1,7 @@
 package fst_stock_service
 
 import (
+	"time"
 	"yslinear/go-covid19/models"
 )
 
@@ -14,10 +15,11 @@ type Hospital struct {
 }
 
 type FstStock struct {
-	Hospital Hospital
-	Brand    string
-	Amount   string
-	Remark   string
+	Hospital  Hospital
+	Brand     string
+	Amount    string
+	Remark    string
+	CreatedAt time.Time
 }
 
 func (f *FstStock) Add() error {
@@ -30,18 +32,26 @@ func (f *FstStock) Add() error {
 		"phone":   f.Hospital.Phone,
 	}
 
+	hospitalisExist, _ := models.ExistHospitalByCode(f.Hospital.Code)
+	if !hospitalisExist {
+		if err := models.AddHospital(hospital); err != nil {
+			return err
+		}
+	}
+
 	fst := map[string]interface{}{
-		"brand":  f.Brand,
-		"amount": f.Amount,
-		"remark": f.Remark,
+		"hospitalCode": f.Hospital.Code,
+		"brand":        f.Brand,
+		"amount":       f.Amount,
+		"remark":       f.Remark,
+		"createdAt":    f.CreatedAt,
 	}
 
-	if err := models.AddHospital(hospital); err != nil {
-		return err
+	FstisExist, _ := models.ExistFstByHospitalCodeAndCreatedAt(f.Hospital.Code, f.CreatedAt)
+	if !FstisExist {
+		if err := models.AddFst(fst); err != nil {
+			return err
+		}
 	}
-	if err := models.AddFst(fst); err != nil {
-		return err
-	}
-
 	return nil
 }
