@@ -62,3 +62,21 @@ func ExistHospitalByCode(code int) (bool, error) {
 
 	return false, nil
 }
+
+func GetAllHospitalCities() ([]string, error) {
+	var cities []string
+	if err := db.Table("hospitals").Select("city").Group("city").Pluck("city", &cities).Error; err != nil {
+		return nil, err
+	}
+
+	return cities, nil
+}
+
+func GetAllHospitalDistricts(city string) ([]string, error) {
+	var districts []string
+	if err := db.Table("hospitals").Select("district").Where("city = ?", city).Group("district").Pluck("district", &districts).Error; err != nil {
+		return nil, err
+	}
+
+	return districts, nil
+}

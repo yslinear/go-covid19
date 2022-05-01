@@ -41,3 +41,36 @@ func GetHospitals(c *gin.Context) {
 		"data":    data,
 	})
 }
+
+func GetAllHospitalCities(c *gin.Context) {
+	cities, err := hospital_service.GetAllCities()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": "success",
+		"data":    cities,
+	})
+}
+
+func GetAllHospitalDistricts(c *gin.Context) {
+	city := c.Param("city")
+	districts, err := hospital_service.GetAllDistricts(city)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": "success",
+		"data":    districts,
+	})
+}
