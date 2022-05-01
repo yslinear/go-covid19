@@ -28,5 +28,11 @@ func (h *Hospital) GetAll() ([]*models.Hospital, error) {
 func (h *Hospital) getMaps() map[string]interface{} {
 	maps := make(map[string]interface{})
 	maps["deleted_at"] = nil
+	if h.City != "" {
+		maps["city"] = h.City
+	}
+	if h.District != "" {
+		maps["district"] = h.District
+	}
 	return maps
 }

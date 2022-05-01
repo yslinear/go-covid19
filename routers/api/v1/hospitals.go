@@ -8,7 +8,12 @@ import (
 )
 
 func GetHospitals(c *gin.Context) {
-	hospitalService := hospital_service.Hospital{}
+	hospitalService := hospital_service.Hospital{
+		City: c.Query("city"),
+	}
+	if c.Query("city") != "" {
+		hospitalService.District = c.Query("district")
+	}
 
 	total, err := hospitalService.Count()
 	if err != nil {
