@@ -9,8 +9,8 @@ type Hospital struct {
 	City     string
 	District string
 	Address  string
-	Lng      float32
-	Lat      float32
+	Lng      float64
+	Lat      float64
 	Phone    string
 }
 
@@ -21,8 +21,8 @@ func AddHospital(data map[string]interface{}) error {
 		City:     data["city"].(string),
 		District: data["district"].(string),
 		Address:  data["address"].(string),
-		Lng:      data["lng"].(float32),
-		Lat:      data["lat"].(float32),
+		Lng:      data["lng"].(float64),
+		Lat:      data["lat"].(float64),
 		Phone:    data["phone"].(string),
 	}
 	if err := db.Create(&hospital).Error; err != nil {

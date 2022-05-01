@@ -11,7 +11,8 @@ import (
 	"strings"
 	"time"
 	"yslinear/go-covid19/pkg/setting"
-	"yslinear/go-covid19/service/fst_stock_service"
+	"yslinear/go-covid19/service/fst_service"
+	"yslinear/go-covid19/service/hospital_service"
 
 	"golang.org/x/text/width"
 )
@@ -30,7 +31,7 @@ func Setup() {
 	}
 
 	for _, row := range csvData {
-		code, _ := strconv.Atoi(row[0])
+		hospitalCode, _ := strconv.Atoi(row[0])
 		lng, _ := strconv.ParseFloat(row[3], 32)
 		lat, _ := strconv.ParseFloat(row[4], 32)
 
@@ -44,25 +45,36 @@ func Setup() {
 		r, _ = regexp.Compile(`(\W+?市區|\W+?鎮區|\W+?[鄉鎮市區])`)
 		district := r.FindString(address)
 		address = strings.Replace(address, district, "", 1)
+		amount, _ := strconv.Atoi(row[7])
 
-		fstStockService := fst_stock_service.FstStock{
-			Hospital: fst_stock_service.Hospital{
-				Code:     code,
-				Name:     row[1],
-				City:     city,
-				District: district,
-				Address:  address,
-				Lng:      float32(lng),
-				Lat:      float32(lat),
-				Phone:    row[5],
-			},
-			Brand:     row[6],
-			Amount:    row[7],
-			Remark:    row[9],
-			CreatedAt: t,
+		hospitalService := hospital_service.Hospital{
+			Code: hospitalCode,
 		}
-		if err := fstStockService.Add(); err != nil {
+		if count, err := hospitalService.Count(); err != nil {
 			panic(err)
+		} else if count == 0 {
+			hospitalService.Name = row[1]
+			hospitalService.City = city
+			hospitalService.District = district
+			hospitalService.Address = address
+			hospitalService.Lng = lng
+			hospitalService.Lat = lat
+			hospitalService.Phone = row[5]
+			hospitalService.Add()
+		}
+
+		fstService := fst_service.Fst{
+			HospitalCode: hospitalCode,
+			CreatedAt:    t,
+		}
+
+		if count, err := fstService.Count(); err != nil {
+			panic(err)
+		} else if count == 0 {
+			fstService.Brand = row[6]
+			fstService.Amount = amount
+			fstService.Remark = row[9]
+			fstService.Add()
 		}
 	}
 }
