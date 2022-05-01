@@ -6,12 +6,14 @@ import (
 )
 
 type Hospital struct {
-	Code    int
-	Name    string
-	Address string
-	Lng     float32
-	Lat     float32
-	Phone   string
+	Code     int
+	Name     string
+	City     string
+	District string
+	Address  string
+	Lng      float32
+	Lat      float32
+	Phone    string
 }
 
 type FstStock struct {
@@ -24,12 +26,14 @@ type FstStock struct {
 
 func (f *FstStock) Add() error {
 	hospital := map[string]interface{}{
-		"code":    f.Hospital.Code,
-		"name":    f.Hospital.Name,
-		"address": f.Hospital.Address,
-		"lng":     f.Hospital.Lng,
-		"lat":     f.Hospital.Lat,
-		"phone":   f.Hospital.Phone,
+		"code":     f.Hospital.Code,
+		"name":     f.Hospital.Name,
+		"city":     f.Hospital.City,
+		"district": f.Hospital.District,
+		"address":  f.Hospital.Address,
+		"lng":      f.Hospital.Lng,
+		"lat":      f.Hospital.Lat,
+		"phone":    f.Hospital.Phone,
 	}
 
 	hospitalisExist, _ := models.ExistHospitalByCode(f.Hospital.Code)

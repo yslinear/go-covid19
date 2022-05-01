@@ -3,12 +3,14 @@ package hospital_service
 import "yslinear/go-covid19/models"
 
 type Hospital struct {
-	Code    int
-	Name    string
-	Address string
-	Lng     float32
-	Lat     float32
-	Phone   string
+	Code     int
+	Name     string
+	City     string
+	District string
+	Address  string
+	Lng      float32
+	Lat      float32
+	Phone    string
 }
 
 func (h *Hospital) Count() (int64, error) {
