@@ -28,6 +28,24 @@ func AddHospital(data map[string]interface{}) error {
 	return nil
 }
 
+func GetHospitals(maps interface{}) ([]*Hospital, error) {
+	var hospitals []*Hospital
+	if err := db.Where(maps).Find(&hospitals).Error; err != nil {
+		return nil, err
+	}
+
+	return hospitals, nil
+}
+
+func GetHospitalTotal(maps interface{}) (int64, error) {
+	var count int64
+	if err := db.Model(&Hospital{}).Where(maps).Count(&count).Error; err != nil {
+		return 0, err
+	}
+
+	return count, nil
+}
+
 func ExistHospitalByCode(code int) (bool, error) {
 	var hospital Hospital
 
