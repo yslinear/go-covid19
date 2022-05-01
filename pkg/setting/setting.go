@@ -23,7 +23,12 @@ type Server struct {
 var ServerSetting = &Server{}
 
 type Database struct {
-	SqlitePath string
+	Host     string
+	User     string
+	Password string
+	Name     string
+	Port     string
+	TimeZone string
 }
 
 var DatabaseSetting = &Database{}
