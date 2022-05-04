@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"yslinear/go-covid19/models"
+	"yslinear/go-covid19/pkg/cronjob"
 	"yslinear/go-covid19/pkg/dataset"
 	"yslinear/go-covid19/pkg/setting"
 	"yslinear/go-covid19/routers"
@@ -16,6 +17,7 @@ func init() {
 	setting.Setup()
 	models.Setup()
 	dataset.Setup()
+	cronjob.Setup()
 }
 
 func main() {
