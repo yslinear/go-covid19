@@ -16,6 +16,7 @@ func InitRouter() *gin.Engine {
 	apiv1.GET("/hospitals", v1.GetHospitals)
 	apiv1.GET("/hospitals/cities", v1.GetAllHospitalCities)
 	apiv1.GET("/hospitals/districts/:city", v1.GetAllHospitalDistricts)
+	apiv1.GET("/hospital/:code", v1.GetHospital)
 
 	return r
 }

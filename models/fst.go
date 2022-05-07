@@ -59,3 +59,12 @@ func ExistFstByHospitalCodeAndCreatedAt(hospitalCode int, createdAt time.Time) (
 
 	return false, nil
 }
+
+func GetFst(maps interface{}) ([]*Fst, error) {
+	var fst []*Fst
+	if err := db.Where(maps).Order("created_at desc").Find(&fst).Error; err != nil {
+		return nil, err
+	}
+
+	return fst, nil
+}

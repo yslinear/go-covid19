@@ -41,6 +41,14 @@ func (f *Fst) GetAll() ([]*models.Fst, error) {
 	return fsts, nil
 }
 
+func (f *Fst) Get() ([]*models.Fst, error) {
+	fst, err := models.GetFst(f.getMaps())
+	if err != nil {
+		return nil, err
+	}
+	return fst, nil
+}
+
 func (f *Fst) getMaps() map[string]interface{} {
 	maps := make(map[string]interface{})
 	maps["deleted_at"] = nil

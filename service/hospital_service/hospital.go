@@ -44,6 +44,14 @@ func (h *Hospital) GetAll() ([]*models.Hospital, error) {
 	return hospitals, nil
 }
 
+func (h *Hospital) Get() (*models.Hospital, error) {
+	hospital, err := models.GetHospital(h.getMaps())
+	if err != nil {
+		return nil, err
+	}
+	return hospital, nil
+}
+
 func (h *Hospital) getMaps() map[string]interface{} {
 	maps := make(map[string]interface{})
 	maps["deleted_at"] = nil

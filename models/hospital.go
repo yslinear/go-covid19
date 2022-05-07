@@ -80,3 +80,12 @@ func GetAllHospitalDistricts(city string) ([]string, error) {
 
 	return districts, nil
 }
+
+func GetHospital(maps interface{}) (*Hospital, error) {
+	var hospital *Hospital
+	if err := db.Where(maps).Find(&hospital).Error; err != nil {
+		return nil, err
+	}
+
+	return hospital, nil
+}
