@@ -24,3 +24,4 @@ upload/datasets/
 # Visual Studio Code
 .vscode/
 __debug_bin
+go-covid19
