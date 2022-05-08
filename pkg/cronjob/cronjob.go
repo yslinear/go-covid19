@@ -8,6 +8,6 @@ import (
 
 func Setup() {
 	c := cron.New()
-	c.AddFunc("@every 10m", dataset.Setup)
+	c.AddFunc("@every 20m", dataset.Setup)
 	c.Start()
 }
