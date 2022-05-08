@@ -31,7 +31,7 @@ func Setup() {
 	}
 
 	for _, row := range csvData {
-		hospitalCode, _ := strconv.Atoi(row[0])
+		hospitalCode := row[0]
 		lng, _ := strconv.ParseFloat(row[3], 32)
 		lat, _ := strconv.ParseFloat(row[4], 32)
 

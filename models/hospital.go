@@ -4,7 +4,7 @@ import "gorm.io/gorm"
 
 type Hospital struct {
 	gorm.Model
-	Code     int
+	Code     string
 	Name     string
 	City     string
 	District string
@@ -16,7 +16,7 @@ type Hospital struct {
 
 func AddHospital(data map[string]interface{}) error {
 	hospital := Hospital{
-		Code:     data["code"].(int),
+		Code:     data["code"].(string),
 		Name:     data["name"].(string),
 		City:     data["city"].(string),
 		District: data["district"].(string),

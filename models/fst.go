@@ -8,7 +8,7 @@ import (
 
 type Fst struct {
 	gorm.Model
-	HospitalCode int
+	HospitalCode string
 	Brand        string
 	Amount       int
 	Remark       string
@@ -17,7 +17,7 @@ type Fst struct {
 
 func AddFst(data map[string]interface{}) error {
 	fst := Fst{
-		HospitalCode: data["hospitalCode"].(int),
+		HospitalCode: data["hospitalCode"].(string),
 		Brand:        data["brand"].(string),
 		Amount:       data["amount"].(int),
 		Remark:       data["remark"].(string),

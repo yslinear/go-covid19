@@ -3,7 +3,7 @@ package hospital_service
 import "yslinear/go-covid19/models"
 
 type Hospital struct {
-	Code     int
+	Code     string
 	Name     string
 	City     string
 	District string
@@ -55,7 +55,7 @@ func (h *Hospital) Get() (*models.Hospital, error) {
 func (h *Hospital) getMaps() map[string]interface{} {
 	maps := make(map[string]interface{})
 	maps["deleted_at"] = nil
-	if h.Code != 0 {
+	if h.Code != "" {
 		maps["code"] = h.Code
 	}
 	if h.City != "" {

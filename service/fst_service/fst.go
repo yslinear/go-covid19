@@ -6,7 +6,7 @@ import (
 )
 
 type Fst struct {
-	HospitalCode int
+	HospitalCode string
 	Brand        string
 	Amount       int
 	Remark       string
@@ -52,7 +52,7 @@ func (f *Fst) Get() ([]*models.Fst, error) {
 func (f *Fst) getMaps() map[string]interface{} {
 	maps := make(map[string]interface{})
 	maps["deleted_at"] = nil
-	if f.HospitalCode != 0 {
+	if f.HospitalCode != "" {
 		maps["hospital_code"] = f.HospitalCode
 	}
 	if !f.CreatedAt.IsZero() {
