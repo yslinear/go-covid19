@@ -8,14 +8,9 @@ type Fst struct {
 	Amount       int
 	Remark       string
 	CreatedAt    time.Time
-}
 
-func (f *Fst) GetFstKey() (string, error) {
-	hash, err := hash(f)
-	if err != nil {
-		return "", err
-	}
-	return "FST:" + hash, nil
+	PageNum  int
+	PageSize int
 }
 
 func (f *Fst) GetFstsKey() (string, error) {

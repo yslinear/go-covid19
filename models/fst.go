@@ -30,9 +30,9 @@ func AddFst(data map[string]interface{}) error {
 	return nil
 }
 
-func GetFsts(maps interface{}) ([]*Fst, error) {
+func GetFsts(pageNum int, pageSize int, maps interface{}) ([]*Fst, error) {
 	var fsts []*Fst
-	if err := db.Where(maps).Find(&fsts).Error; err != nil {
+	if err := db.Where(maps).Order("created_at desc").Offset(pageNum).Limit(pageSize).Find(&fsts).Error; err != nil {
 		return nil, err
 	}
 
@@ -58,13 +58,4 @@ func ExistFstByHospitalCodeAndCreatedAt(hospitalCode int, createdAt time.Time) (
 	}
 
 	return false, nil
-}
-
-func GetFst(maps interface{}) ([]*Fst, error) {
-	var fst []*Fst
-	if err := db.Where(maps).Order("created_at desc").Find(&fst).Error; err != nil {
-		return nil, err
-	}
-
-	return fst, nil
 }

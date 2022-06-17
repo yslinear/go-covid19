@@ -95,7 +95,7 @@ func GetHospital(c *gin.Context) {
 		HospitalCode: c.Param("code"),
 	}
 
-	data["fst"], err = fst_service.Get()
+	data["fst"], err = fst_service.GetAll()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": err.Error(),

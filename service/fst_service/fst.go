@@ -14,6 +14,9 @@ type Fst struct {
 	Amount       int
 	Remark       string
 	CreatedAt    time.Time
+
+	PageNum  int
+	PageSize int
 }
 
 func (f *Fst) Add() error {
@@ -54,39 +57,12 @@ func (f *Fst) GetAll() ([]*models.Fst, error) {
 		}
 	}
 
-	fsts, err := models.GetFsts(f.getMaps())
+	fsts, err := models.GetFsts(f.PageNum, f.PageSize, f.getMaps())
 	if err != nil {
 		return nil, err
 	}
 	gredis.Set(key, fsts, 3600)
 	return fsts, nil
-}
-
-func (f *Fst) Get() ([]*models.Fst, error) {
-	var cacheFst []*models.Fst
-
-	cache := cache_service.Fst(*f)
-	key, err := cache.GetFstKey()
-	if err != nil {
-		return nil, err
-	}
-	if gredis.Exists(key) {
-		data, err := gredis.Get(key)
-		if err != nil {
-			return nil, err
-		} else {
-			json.Unmarshal(data, &cacheFst)
-			return cacheFst, nil
-		}
-	}
-
-	fst, err := models.GetFst(f.getMaps())
-	if err != nil {
-		return nil, err
-	}
-
-	gredis.Set(key, fst, 3600)
-	return fst, nil
 }
 
 func (f *Fst) getMaps() map[string]interface{} {
