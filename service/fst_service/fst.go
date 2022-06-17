@@ -1,8 +1,11 @@
 package fst_service
 
 import (
+	"encoding/json"
 	"time"
 	"yslinear/go-covid19/models"
+	"yslinear/go-covid19/pkg/gredis"
+	"yslinear/go-covid19/service/cache_service"
 )
 
 type Fst struct {
@@ -34,18 +37,55 @@ func (f *Fst) Count() (int64, error) {
 }
 
 func (f *Fst) GetAll() ([]*models.Fst, error) {
+	var cacheFsts []*models.Fst
+
+	cache := cache_service.Fst(*f)
+	key, err := cache.GetFstsKey()
+	if err != nil {
+		return nil, err
+	}
+	if gredis.Exists(key) {
+		data, err := gredis.Get(key)
+		if err != nil {
+			return nil, err
+		} else {
+			json.Unmarshal(data, &cacheFsts)
+			return cacheFsts, nil
+		}
+	}
+
 	fsts, err := models.GetFsts(f.getMaps())
 	if err != nil {
 		return nil, err
 	}
+	gredis.Set(key, fsts, 3600)
 	return fsts, nil
 }
 
 func (f *Fst) Get() ([]*models.Fst, error) {
+	var cacheFst []*models.Fst
+
+	cache := cache_service.Fst(*f)
+	key, err := cache.GetFstKey()
+	if err != nil {
+		return nil, err
+	}
+	if gredis.Exists(key) {
+		data, err := gredis.Get(key)
+		if err != nil {
+			return nil, err
+		} else {
+			json.Unmarshal(data, &cacheFst)
+			return cacheFst, nil
+		}
+	}
+
 	fst, err := models.GetFst(f.getMaps())
 	if err != nil {
 		return nil, err
 	}
+
+	gredis.Set(key, fst, 3600)
 	return fst, nil
 }
 
