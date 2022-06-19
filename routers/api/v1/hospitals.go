@@ -97,7 +97,7 @@ func GetHospital(c *gin.Context) {
 		PageSize:     20,
 	}
 
-	data["fst"], err = fst_service.GetAll()
+	data["fsts"], err = fst_service.GetAll()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": err.Error(),
