@@ -93,6 +93,8 @@ func GetHospital(c *gin.Context) {
 
 	fst_service := fst_service.Fst{
 		HospitalCode: c.Param("code"),
+		PageNum:      0,
+		PageSize:     20,
 	}
 
 	data["fst"], err = fst_service.GetAll()
